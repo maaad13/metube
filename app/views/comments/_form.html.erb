@@ -1,0 +1,12 @@
+<%= form_with model: [@video, Comment.new], local: true do |form| %>
+  <div>
+    <%= form.label :content, "Write your comment:", 
+                    %>
+    <%= form.text_area :content, 
+                      %>
+  </div>
+  <div>
+    <%= form.submit "Post Comment", 
+                  %>
+  </div>
+<% end %>

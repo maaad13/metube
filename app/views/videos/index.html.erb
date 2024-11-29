@@ -1,0 +1,205 @@
+<html>
+<head>
+  
+  <style>
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .video-item {
+      font-family: Arial, sans-serif;
+    }
+
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .video-thumbnail video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .video-info-container {
+      margin-top: 10px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .uploader-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .uploader-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .video-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+      margin: 5px 0;
+    }
+
+    .video-uploader {
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .video-meta {
+      font-size: 13px;
+      color: #888;
+    }
+
+    @media (max-width: 1200px) {
+      .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="filter-tags-wrapper">
+      <button class="scroll-btn left-btn" aria-label="Scroll Left">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="filter-tags" role="navigation" aria-label="Content filters">
+        <button class="tag active" aria-pressed="true">All</button>
+        <button class="tag">Gaming</button>
+        <button class="tag">FC Barcelona</button>
+        <button class="tag">Apple</button>
+        <button class="tag">Sports leagues</button>
+        <button class="tag">User interface design</button>
+        <button class="tag">Music</button>
+        <button class="tag">Mixes</button>
+        <button class="tag">Live</button>
+        <button class="tag">EFootball</button>
+        <button class="tag">Editing</button>
+        <button class="tag">Game shows</button>
+        <button class="tag">Intelligence</button>
+        <button class="tag">Artificial Intelligence</button>
+        <button class="tag">Education</button>
+      </div>
+      <button class="scroll-btn right-btn" aria-label="Scroll Right">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="video-grid">
+    <% @videos.each do |video| %>
+      <div class="video-item">
+        <a href="<%= video_path(video) %>">
+          <div class="video-thumbnail">
+            <% if video.file.attached? %>
+              <video width="100%" controls>
+                <source src="<%= url_for(video.file) %>" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            <% else %>
+              <img src="/path/to/default-thumbnail.jpg" alt="No video available">
+            <% end %>
+          </div>
+        </a>
+        <div class="video-info-container">
+          <div class="uploader-avatar">
+            <img src="https://img6.arthub.ai/64c007f4-aa90.webp" alt="Avatar">
+          </div>
+          <div class="video-info">
+            <a href="<%= video_path(video) %>" class="video-title"><%= video.title %></a>
+            <span class="video-uploader">Channel Name</span>
+            <div class="video-meta">
+              <span><%= video.watch_counts.count %> views</span> •
+              <span><%= time_ago_in_words(video.created_at) %> ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const filterTags = document.querySelector(".filter-tags");
+      const leftBtn = document.querySelector(".left-btn");
+      const rightBtn = document.querySelector(".right-btn");
+
+      function updateButtonVisibility() {
+          const scrollLeft = filterTags.scrollLeft;
+          const scrollWidth = filterTags.scrollWidth;
+          const clientWidth = filterTags.clientWidth;
+
+          if (scrollLeft <= 0) {
+              leftBtn.style.display = 'none';
+          } else {
+              leftBtn.style.display = 'block';
+          }
+
+          if (scrollLeft + clientWidth >= scrollWidth) {
+              rightBtn.style.display = 'none';
+          } else {
+              rightBtn.style.display = 'block';
+          }
+      }
+
+      updateButtonVisibility();
+
+      leftBtn.addEventListener("click", () => {
+          filterTags.scrollBy({ left: -200, behavior: "smooth" });
+          updateButtonVisibility();  
+      });
+
+      rightBtn.addEventListener("click", () => {
+          filterTags.scrollBy({ left: 200, behavior: "smooth" });
+          updateButtonVisibility();  
+      });
+
+      filterTags.addEventListener('scroll', updateButtonVisibility);
+
+      const tags = document.querySelectorAll(".tag");
+      tags.forEach((tag) => {
+          tag.addEventListener("click", () => {
+              tags.forEach((t) => t.classList.remove("active")); 
+              tag.classList.add("active"); 
+          });
+      });
+  });
+</script>
+
+</html>

@@ -1,0 +1,17 @@
+<div>
+  <p>
+    <strong>Commenter:</strong> 
+    <%= comment.user.email %>
+  </p>
+  <p>
+    <strong>Comment:</strong> 
+    <%= comment.content %>
+  </p>
+  <% if can?(:destroy, comment) %>
+    <p>
+      <%= link_to "Destroy Comment", [comment.video, comment], 
+                  data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+                  %>
+    </p>
+  <% end %>
+</div>

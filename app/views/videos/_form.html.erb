@@ -1,0 +1,47 @@
+
+<style>
+  .form-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-container .form-label {
+  font-weight: bold;
+}
+
+.form-container .form-control {
+  height: auto;
+  padding: 10px;
+}
+
+.form-container .btn {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+</style>
+<%= form_with(model: @video, local: true, html: { class: "form-container", multipart: true }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, "Title:", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Description:", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :file, "Upload Video File:", class: "form-label" %>
+    <%= form.file_field :file, class: "form-control" %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit "Upload Video", class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>

@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: hammadali
+  password: password
+  host: localhost
+development:
+  <<: *default
+  database: youtube_development
+test:
+  <<: *default
+  database: youtube_test
+production:
+  <<: *default
+  database: youtube_production
