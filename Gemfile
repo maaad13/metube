@@ -48,8 +48,12 @@ gem "rolify"
 gem "cancancan"
 gem 'mini_magick'
 gem 'pg', '~> 1.4'
+gem 'faker', '~> 2.0'
 
 group :development, :test do
+  gem 'shoulda-matchers', '~> 5.0'
+  gem 'rspec-rails', '~> 5.0'
+  gem 'factory_bot_rails'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
 end
@@ -66,6 +70,7 @@ group :development do
 end
 
 group :test do
+  gem 'rails-controller-testing'
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"

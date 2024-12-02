@@ -8,9 +8,11 @@ default: &default
 development:
   <<: *default
   database: youtube_development
+  sslmode: disable
 test:
   <<: *default
   database: youtube_test
+  sslmode: disable
 production:
   <<: *default
   database: youtube_production
